@@ -11,12 +11,19 @@ namespace TestDist
         private SortedSet<P2D> _points;
         private SortedSet<D2> _distances2;
 
+        // Track Already displayed
+        private SortedSet<P2D> _dPoints;
+        private SortedSet<D2> _dDistances2;
+
         public MyPoints()
         {
+            _distances2 = new SortedSet<D2>(new D2Comparer());
             _points = new SortedSet<P2D>(new P2DComparer());
             _points.Add(new P2D(-1, 0));
             _points.Add(new P2D(+1, 0));
-            _distances2 = new SortedSet<D2>(new D2Comparer());
+            
+            _dPoints= new SortedSet<P2D>(new P2DComparer());
+            _dDistances2 = new SortedSet<D2>(new D2Comparer());
         }
 
         public void GenDistances2()
@@ -54,12 +61,25 @@ namespace TestDist
         {
             foreach (var p in _points)
             {
-                if (_distances2.Contains(new D2(p.Norm2(), null, null)))
+                var r2 = new D2(p.Norm2(), null, null);
+                if (_distances2.Contains(r2))
                 {
-                    Console.WriteLine("Match: {0} {1}", p, p.Norm2());
-                    DisplayConstruct(p);   
+                    Console.WriteLine("Match: {0} {1}", p, r2);
+                    var dc = new D2Comparer();
+                    DisplayAllConstruct(p, _distances2.First(x => dc.Compare(x, r2) == 0));
+                    return;
                 }
             }
+        }
+
+        public void DisplayAllConstruct(P2D p, D2 l2)
+        {
+            _dPoints.Clear();
+            _dDistances2.Clear();
+            Console.WriteLine("=== Point ===");
+            DisplayConstruct(p);
+            Console.WriteLine("=== Distance ===");
+            DisplayConstruct(l2);
         }
 
         public override string ToString()
@@ -76,23 +96,33 @@ namespace TestDist
         }
 
         public void DisplayConstruct(P2D p)
-        {       
-            if (p.g != null)
+        {
+            if (!_dPoints.Contains(p))
             {
+                _dPoints.Add(p);
                 Console.WriteLine("point: {0}", p);
-                Console.WriteLine("Gen: {0}", p.g);
-                DisplayConstruct(p.g.A);
-                DisplayConstruct(p.g.B);
-                DisplayConstruct(p.g.l2);
-                DisplayConstruct(p.g.h2);
+                if (p.g != null)
+                {
+                    Console.WriteLine("Gen: {0}", p.g);
+                    DisplayConstruct(p.g.A);
+                    DisplayConstruct(p.g.B);
+                    DisplayConstruct(p.g.l2);
+                    DisplayConstruct(p.g.h2);
+                }
+                else
+                    Console.WriteLine("Initial point");
             }
         }
 
         public void DisplayConstruct(D2 d)
         {
-            Console.WriteLine("distance: {0}", d);
-            DisplayConstruct(d.A);
-            DisplayConstruct(d.B);
+            if (!_dDistances2.Contains(d))
+            {
+                _dDistances2.Add(d);
+                Console.WriteLine("distance: {0}", d);
+                DisplayConstruct(d.A);
+                DisplayConstruct(d.B);
+            }
         }
     }
 }

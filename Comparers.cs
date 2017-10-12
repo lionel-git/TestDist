@@ -27,11 +27,18 @@ namespace TestDist
 
     public class DoubleComparer : IComparer<double>
     {
+        private double _eps;
+
+        public DoubleComparer(double eps = Constants.EPS)
+        {
+            _eps = eps;
+        }
+
         public int Compare(double x, double y)
         {
-            if (x < y - Constants.EPS)
+            if (x < y - _eps)
                 return -1;
-            else if (x > y + Constants.EPS)
+            else if (x > y + _eps)
                 return +1;
             else return 0;
         }
@@ -39,13 +46,11 @@ namespace TestDist
 
     public class D2Comparer : IComparer<D2>
     {
+        private DoubleComparer dc = new DoubleComparer();
+
         public int Compare(D2 l2, D2 h2)
         {
-            if (l2.Value < h2.Value - Constants.EPS)
-                return -1;
-            else if (l2.Value > h2.Value + Constants.EPS)
-                return +1;
-            else return 0;
+            return dc.Compare(l2.Value, h2.Value);
         }
     }
 }

@@ -9,14 +9,14 @@ namespace TestDist
     public class MyPoints
     {
         private SortedSet<P2D> _points;
-        private SortedSet<double> _distances2;
+        private SortedSet<D2> _distances2;
 
         public MyPoints()
         {
             _points = new SortedSet<P2D>(new P2DComparer());
             _points.Add(new P2D(-1, 0));
             _points.Add(new P2D(+1, 0));
-            _distances2 = new SortedSet<double>(new DoubleComparer());
+            _distances2 = new SortedSet<D2>(new D2Comparer());
         }
 
         public void GenDistances2()
@@ -27,7 +27,7 @@ namespace TestDist
                 for (int j = i + 1; j < p.Length; j++)
                 {
                     var V = p[j] - p[i];
-                    _distances2.Add(V.Norm2());
+                    _distances2.Add(new D2(V.Norm2(), p[i], p[j]));
                 }
         }
 
@@ -40,45 +40,25 @@ namespace TestDist
                 for (int j = i + 1; j < p.Length; j++)
                     for (int k = 0; k < d2.Length; k++)
                         for (int l = k; l < d2.Length; l++)
-                            nps.AddRange(Generate(p[i], p[j], d2[k], d2[l]));
+                        {
+                            var g = new Generator(p[i], p[j], d2[k], d2[l]);
+                            nps.AddRange(g.Generate());
+                        }
             int nbp = _points.Count;
             foreach (var np in nps)
                 _points.Add(np);
             Console.WriteLine("Points: {0} => {1}", nbp, _points.Count);
         }
 
-        // Genere 4 points depuis segment [A,B] avec compas et distance a2 et b2 (carre)
-        // Pour generer la construction
-        // garder les references de generation 
-        // points => distances
-        // M <= (A, B, l2, h2)
-        // d2 <= (C, D)
-        public static List<P2D> Generate(P2D A, P2D B, double l2, double h2)
-        {
-            var AB = B - A;
-            var d2 = AB.Norm2();
-            var d = Math.Sqrt(AB.Norm2());
-
-            var p = new List<P2D>();
-            if (l2 + h2 > d2)
-            {
-                double alpha = 0.5 * (d + ((l2 - h2) / d));
-                double beta = 0.5 * (d + ((h2 - l2) / d));
-                double lambda = Math.Sqrt(l2 - alpha * alpha);
-                p.Add(A + (1 / d) * (alpha * AB + lambda * P2D.Orthogonal(AB)));
-                p.Add(A + (1 / d) * (alpha * AB - lambda * P2D.Orthogonal(AB)));
-                p.Add(A + (1 / d) * (beta * AB + lambda * P2D.Orthogonal(AB)));
-                p.Add(A + (1 / d) * (beta * AB - lambda * P2D.Orthogonal(AB)));
-            }
-            return p;
-        }
-
         public void CheckPointMatch()
         {
             foreach (var p in _points)
             {
-                if (_distances2.Contains(p.Norm2()))
+                if (_distances2.Contains(new D2(p.Norm2(), null, null)))
+                {
                     Console.WriteLine("Match: {0} {1}", p, p.Norm2());
+                    DisplayConstruct(p);   
+                }
             }
         }
 
@@ -93,6 +73,26 @@ namespace TestDist
             foreach (var p in _points)
                 sb.Append(p).Append(" | ");
             return sb.ToString();
+        }
+
+        public void DisplayConstruct(P2D p)
+        {       
+            if (p.g != null)
+            {
+                Console.WriteLine("point: {0}", p);
+                Console.WriteLine("Gen: {0}", p.g);
+                DisplayConstruct(p.g.A);
+                DisplayConstruct(p.g.B);
+                DisplayConstruct(p.g.l2);
+                DisplayConstruct(p.g.h2);
+            }
+        }
+
+        public void DisplayConstruct(D2 d)
+        {
+            Console.WriteLine("distance: {0}", d);
+            DisplayConstruct(d.A);
+            DisplayConstruct(d.B);
         }
     }
 }

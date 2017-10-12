@@ -11,6 +11,8 @@ namespace TestDist
         public double x { get; set; }
         public double y { get; set; }
 
+        public Generator g { get; set; }
+
         public P2D(double x, double y)
         {
             this.x = x;
@@ -45,7 +47,6 @@ namespace TestDist
         {
             return String.Format("({0:0.0000},{1:0.0000})", x, y);
         }
-
     }
 }
 

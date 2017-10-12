@@ -36,4 +36,16 @@ namespace TestDist
             else return 0;
         }
     }
+
+    public class D2Comparer : IComparer<D2>
+    {
+        public int Compare(D2 l2, D2 h2)
+        {
+            if (l2.Value < h2.Value - Constants.EPS)
+                return -1;
+            else if (l2.Value > h2.Value + Constants.EPS)
+                return +1;
+            else return 0;
+        }
+    }
 }

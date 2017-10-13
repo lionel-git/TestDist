@@ -100,17 +100,14 @@ namespace TestDist
             if (!_dPoints.Contains(p))
             {
                 _dPoints.Add(p);
-                Console.WriteLine("point: {0}", p);
+                Console.WriteLine("point: {0}", p.ToString(true));
                 if (p.g != null)
                 {
-                    Console.WriteLine("Gen: {0}", p.g);
                     DisplayConstruct(p.g.A);
                     DisplayConstruct(p.g.B);
                     DisplayConstruct(p.g.l2);
                     DisplayConstruct(p.g.h2);
                 }
-                else
-                    Console.WriteLine("Initial point");
             }
         }
 
@@ -119,7 +116,7 @@ namespace TestDist
             if (!_dDistances2.Contains(d))
             {
                 _dDistances2.Add(d);
-                Console.WriteLine("distance: {0}", d);
+                Console.WriteLine("distance: {0}", d.ToString(true));
                 DisplayConstruct(d.A);
                 DisplayConstruct(d.B);
             }

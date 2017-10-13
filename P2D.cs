@@ -43,9 +43,24 @@ namespace TestDist
             return new P2D(l * V.x, l * V.y);
         }
 
+        public string ToString(bool displayGen)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("({0:0.0000},{1:0.0000})", x, y);
+            if (displayGen)
+            {
+                if (g != null)
+                    sb.AppendFormat(" Gen: {0}", g);
+                else
+                    sb.Append(" **");
+            }
+            return sb.ToString();
+        }
+
+
         public override string ToString()
         {
-            return String.Format("({0:0.0000},{1:0.0000})", x, y);
+            return ToString(false);
         }
     }
 }

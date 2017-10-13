@@ -19,11 +19,18 @@ namespace TestDist
         public P2D A { get; set; }
         public P2D B { get; set; }
 
-        public override string ToString()
+        public string ToString(bool displayPoints=false)
         {
             var sb = new StringBuilder();
-            sb.AppendFormat("{0} {1} {2}", Value, A, B);
+            sb.AppendFormat("{0}", Value);
+            if (displayPoints)
+                sb.AppendFormat(" {0} {1}", A, B);
             return sb.ToString();
+        }
+
+        public override string ToString()
+        {
+            return ToString(false);
         }
     }
 }

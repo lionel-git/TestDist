@@ -28,24 +28,26 @@ namespace TestDist
 
             try
             {
+                var tc = new TreatConstructConsole();
+
                 var mp = new MyPoints();
                 mp.GenDistances2();
                 Console.WriteLine(mp);
-                mp.CheckPointMatch();
+                mp.CheckPointMatch(tc);
                 
 
                 mp.GenPoints();
                 mp.GenDistances2();
                 Console.WriteLine(mp);
-                mp.CheckPointMatch();
+                mp.CheckPointMatch(tc);
 
                 mp.GenPoints();
                 mp.GenDistances2();
                 Console.WriteLine(mp);
-                mp.CheckPointMatch();
+                mp.CheckPointMatch(tc);
 
                 mp.GenPoints();
-                mp.CheckPointMatch();
+                mp.CheckPointMatch(tc);
 
                 //mp.GenDistances2();
 

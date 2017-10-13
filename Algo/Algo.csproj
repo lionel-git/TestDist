@@ -49,6 +49,7 @@
     <Compile Include="Comparers.cs" />
     <Compile Include="D2.cs" />
     <Compile Include="Generator.cs" />
+    <Compile Include="ITreatConstruct.cs" />
     <Compile Include="MyPoints.cs" />
     <Compile Include="P2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

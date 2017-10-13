@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algo", "Algo\Algo.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDist", "TestDist\TestDist.csproj", "{1F54820E-4762-4859-A0EC-26B675269D19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DispForm", "DispForm\DispForm.csproj", "{BF3B76FC-F3D7-4D3F-8E50-4F707BDA2610}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1F54820E-4762-4859-A0EC-26B675269D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F54820E-4762-4859-A0EC-26B675269D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F54820E-4762-4859-A0EC-26B675269D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF3B76FC-F3D7-4D3F-8E50-4F707BDA2610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF3B76FC-F3D7-4D3F-8E50-4F707BDA2610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF3B76FC-F3D7-4D3F-8E50-4F707BDA2610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF3B76FC-F3D7-4D3F-8E50-4F707BDA2610}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

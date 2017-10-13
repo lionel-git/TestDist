@@ -57,7 +57,7 @@ namespace Algo
             Console.WriteLine("Points: {0} => {1}", nbp, _points.Count);
         }
 
-        public void CheckPointMatch()
+        public void CheckPointMatch(ITreatConstruct tc)
         {
             foreach (var p in _points)
             {
@@ -66,20 +66,20 @@ namespace Algo
                 {
                     Console.WriteLine("Match: {0} {1}", p, r2);
                     var dc = new D2Comparer();
-                    DisplayAllConstruct(p, _distances2.First(x => dc.Compare(x, r2) == 0));
+                    DisplayAllConstruct(p, _distances2.First(x => dc.Compare(x, r2) == 0), tc);
                     return;
                 }
             }
         }
 
-        public void DisplayAllConstruct(P2D p, D2 l2)
+        public void DisplayAllConstruct(P2D p, D2 l2, ITreatConstruct tc)
         {
             _dPoints.Clear();
             _dDistances2.Clear();
             Console.WriteLine("=== Point ===");
-            DisplayConstruct(p);
+            DisplayConstruct(p, tc);
             Console.WriteLine("=== Distance ===");
-            DisplayConstruct(l2);
+            DisplayConstruct(l2, tc);
         }
 
         public override string ToString()
@@ -95,30 +95,30 @@ namespace Algo
             return sb.ToString();
         }
 
-        public void DisplayConstruct(P2D p)
+        public void DisplayConstruct(P2D p, ITreatConstruct tc)
         {
             if (!_dPoints.Contains(p))
             {
                 _dPoints.Add(p);
-                Console.WriteLine("point: {0}", p.ToString(true));
+                tc.Display(p);
                 if (p.g != null)
                 {
-                    DisplayConstruct(p.g.A);
-                    DisplayConstruct(p.g.B);
-                    DisplayConstruct(p.g.l2);
-                    DisplayConstruct(p.g.h2);
+                    DisplayConstruct(p.g.A, tc);
+                    DisplayConstruct(p.g.B, tc);
+                    DisplayConstruct(p.g.l2, tc);
+                    DisplayConstruct(p.g.h2, tc);
                 }
             }
         }
 
-        public void DisplayConstruct(D2 d)
+        public void DisplayConstruct(D2 d, ITreatConstruct tc)
         {
             if (!_dDistances2.Contains(d))
             {
                 _dDistances2.Add(d);
-                Console.WriteLine("distance: {0}", d.ToString(true));
-                DisplayConstruct(d.A);
-                DisplayConstruct(d.B);
+                tc.Display(d);
+                DisplayConstruct(d.A, tc);
+                DisplayConstruct(d.B, tc);
             }
         }
     }

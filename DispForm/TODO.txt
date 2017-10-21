@@ -1,0 +1,2 @@
+﻿Decaler les lignes pour pouvoir avoir plusieurs couleurs affichées
+Gerer plusieurs types (idem couleurs) avec plusieurs shift
